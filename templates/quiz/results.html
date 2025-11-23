@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Results{% endblock %}
+
+{% block content %}
+<div class="results-container">
+    <div class="results-card">
+        <h1 class="results-title">Quiz Completed!</h1>
+        
+        <div class="score-display">
+            <div class="score-circle">
+                <div class="score-value">{{ score }}/{{ total_questions }}</div>
+                <div class="score-percentage">{{ percentage|floatformat:1 }}%</div>
+            </div>
+        </div>
+
+        <div class="results-summary">
+            <div class="summary-item">
+                <span class="summary-label">Correct Answers:</span>
+                <span class="summary-value correct">{{ score }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Wrong Answers:</span>
+                <span class="summary-value wrong">{{ total_questions|add:"-"|add:score }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Percentage:</span>
+                <span class="summary-value">{{ percentage|floatformat:1 }}%</span>
+            </div>
+        </div>
+
+        <div class="results-actions">
+            <a href="{% url 'quiz_explanation' %}" class="btn btn-explanation">
+                View Explanations for Wrong Answers
+            </a>
+            <a href="{% url 'start_quiz' %}" class="btn btn-retry">
+                Take Another Quiz
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

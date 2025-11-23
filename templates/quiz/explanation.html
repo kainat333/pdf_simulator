@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz Explanations{% endblock %}
+
+{% block content %}
+<div class="explanation-container">
+    <div class="explanation-header">
+        <h1 class="explanation-title">Explanations for Wrong Answers</h1>
+        <a href="{% url 'quiz_results' %}" class="btn btn-back">← Back to Results</a>
+    </div>
+
+    {% if wrong_questions %}
+        <div class="explanations-list">
+            {% for item in wrong_questions %}
+                <div class="explanation-card">
+                    <div class="explanation-question-header">
+                        <span class="question-badge">Question {{ item.question.question_number }}</span>
+                    </div>
+                    
+                    <div class="explanation-question-text">
+                        {{ item.question.question_text }}
+                    </div>
+
+                    <div class="explanation-options">
+                        <div class="explanation-option {% if item.user_answer == 'A' %}user-selected{% endif %} {% if item.question.correct_option == 'A' %}correct-option{% endif %}">
+                            <span class="option-letter">A</span>
+                            <span class="option-text">{{ item.question.option_a }}</span>
+                            {% if item.user_answer == 'A' and item.question.correct_option != 'A' %}
+                                <span class="wrong-indicator">✗</span>
+                            {% endif %}
+                            {% if item.question.correct_option == 'A' %}
+                                <span class="correct-indicator">✓</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="explanation-option {% if item.user_answer == 'B' %}user-selected{% endif %} {% if item.question.correct_option == 'B' %}correct-option{% endif %}">
+                            <span class="option-letter">B</span>
+                            <span class="option-text">{{ item.question.option_b }}</span>
+                            {% if item.user_answer == 'B' and item.question.correct_option != 'B' %}
+                                <span class="wrong-indicator">✗</span>
+                            {% endif %}
+                            {% if item.question.correct_option == 'B' %}
+                                <span class="correct-indicator">✓</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="explanation-option {% if item.user_answer == 'C' %}user-selected{% endif %} {% if item.question.correct_option == 'C' %}correct-option{% endif %}">
+                            <span class="option-letter">C</span>
+                            <span class="option-text">{{ item.question.option_c }}</span>
+                            {% if item.user_answer == 'C' and item.question.correct_option != 'C' %}
+                                <span class="wrong-indicator">✗</span>
+                            {% endif %}
+                            {% if item.question.correct_option == 'C' %}
+                                <span class="correct-indicator">✓</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="explanation-option {% if item.user_answer == 'D' %}user-selected{% endif %} {% if item.question.correct_option == 'D' %}correct-option{% endif %}">
+                            <span class="option-letter">D</span>
+                            <span class="option-text">{{ item.question.option_d }}</span>
+                            {% if item.user_answer == 'D' and item.question.correct_option != 'D' %}
+                                <span class="wrong-indicator">✗</span>
+                            {% endif %}
+                            {% if item.question.correct_option == 'D' %}
+                                <span class="correct-indicator">✓</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="explanation-details">
+                        <div class="answer-summary">
+                            <span class="your-answer">Your Answer: <strong>{{ item.user_answer|default:"Not Answered" }}</strong></span>
+                            <span class="correct-answer">Correct Answer: <strong>{{ item.correct_answer }}</strong></span>
+                        </div>
+                        <div class="explanation-text">
+                            <h3 class="explanation-heading">Explanation:</h3>
+                            <p>{{ item.question.explanation }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-wrong-answers">
+            <div class="success-message">
+                <span class="success-icon">🎉</span>
+                <h2>Perfect Score!</h2>
+                <p>You answered all questions correctly. Great job!</p>
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="explanation-footer">
+        <a href="{% url 'quiz_results' %}" class="btn btn-back-bottom">← Back to Results</a>
+        <a href="{% url 'start_quiz' %}" class="btn btn-retry">Take Another Quiz</a>
+    </div>
+</div>
+{% endblock %}

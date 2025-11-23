@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Start Quiz{% endblock %}
+
+{% block content %}
+<div class="start-container">
+    <div class="start-card">
+        <h1 class="quiz-title">Welcome to the Quiz</h1>
+        <div class="quiz-info">
+            <div class="info-item">
+                <span class="info-label">Total Questions:</span>
+                <span class="info-value">50</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Time Duration:</span>
+                <span class="info-value">1 Hour</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">Passing Score:</span>
+                <span class="info-value">25/50</span>
+            </div>
+        </div>
+        <div class="instructions">
+            <h2 class="instructions-title">Instructions:</h2>
+            <ul class="instructions-list">
+                <li>You will have 1 hour to complete 50 questions</li>
+                <li>Each question has 4 options (A, B, C, D)</li>
+                <li>You can navigate between questions using Next and Previous buttons</li>
+                <li>You can submit the quiz at any time before the timer expires</li>
+                <li>The quiz will auto-submit when the timer reaches zero</li>
+                <li>After submission, you can view your score and explanations for wrong answers</li>
+            </ul>
+        </div>
+        <form action="{% url 'begin_quiz' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-start">Start Quiz</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
